@@ -2,5 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ejemplo */
-body { @apply bg-gray-50 text-gray-900; }
+/* Tema Oscuro */
+body { 
+  @apply bg-gray-900 text-gray-100;
+}
+
+html {
+  @apply bg-gray-900;
+}

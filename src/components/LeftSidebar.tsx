@@ -1,106 +1,177 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface LeftSidebarProps {
   currentPage?: string;
 }
 
 export default function LeftSidebar({ currentPage = 'home' }: LeftSidebarProps) {
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
   const isActive = (page: string) => currentPage === page;
-  
+
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+          
+          // Si está en la parte superior, siempre mostrar
+          if (currentScrollY <= 50) {
+            setIsVisible(true);
+            lastScrollY.current = currentScrollY;
+            ticking = false;
+            return;
+          }
+          
+          // Calcular diferencia de scroll
+          const scrollDelta = currentScrollY - lastScrollY.current;
+          
+          // Si se desplaza hacia abajo más de 10px, ocultar
+          if (scrollDelta > 10) {
+            setIsVisible(false);
+          } 
+          // Si se desplaza hacia arriba más de 10px, mostrar
+          else if (scrollDelta < -10) {
+            setIsVisible(true);
+          }
+          
+          lastScrollY.current = currentScrollY;
+          ticking = false;
+        });
+        
+        ticking = true;
+      }
+    };
+
+    // Inicializar la posición
+    lastScrollY.current = window.scrollY || document.documentElement.scrollTop || 0;
+    
+    // Agregar el listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <aside className="w-16 bg-gray-800 flex flex-col items-center py-4 h-screen fixed left-0 top-0">
-      {/* Logo */}
-      <a href="/" className="w-10 h-10 bg-black rounded-lg flex items-center justify-center mb-6 hover:bg-gray-900 transition">
-        <span className="text-white text-xl font-bold">+</span>
-      </a>
-      
-      {/* Navigation Icons */}
-      <nav className="flex flex-col gap-4 mb-auto">
-        <a 
-          href="/" 
-          className={`w-10 h-10 flex items-center justify-center rounded-lg transition ${
-            isActive('home') 
-              ? 'text-white bg-gray-700' 
-              : 'text-gray-400 hover:text-white hover:bg-gray-700'
-          }`}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
-        </a>
-        <a 
-          href="/categories" 
-          className={`w-10 h-10 flex items-center justify-center rounded-lg transition ${
-            isActive('categories') 
-              ? 'text-white bg-gray-700' 
-              : 'text-gray-400 hover:text-white hover:bg-gray-700'
-          }`}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-          </svg>
-        </a>
-        <a 
-          href="/about" 
-          className={`w-10 h-10 flex items-center justify-center rounded-lg transition ${
-            isActive('about') 
-              ? 'text-white bg-gray-700' 
-              : 'text-gray-400 hover:text-white hover:bg-gray-700'
-          }`}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </a>
-        <a 
-          href="/links" 
-          className={`w-10 h-10 flex items-center justify-center rounded-lg transition ${
-            isActive('links') 
-              ? 'text-white bg-gray-700' 
-              : 'text-gray-400 hover:text-white hover:bg-gray-700'
-          }`}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-          </svg>
-        </a>
-        <a 
-          href="/settings" 
-          className={`w-10 h-10 flex items-center justify-center rounded-lg transition ${
-            isActive('settings') 
-              ? 'text-white bg-gray-700' 
-              : 'text-gray-400 hover:text-white hover:bg-gray-700'
-          }`}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-          </svg>
-        </a>
-      </nav>
-      
-      {/* Bottom Icons */}
-      <div className="flex flex-col gap-4 mt-auto">
-        <button className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-        </button>
-        <button className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-        </button>
-        <button className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3 2.959V15m-6 0H5m6 0v1m-6-1v-1m6 1h6M9 9H5m4 0V8m0 1v1" />
-          </svg>
-        </button>
+    <nav 
+      className="fixed left-1/2 bg-gray-800 z-50 shadow-2xl"
+      style={{
+        bottom: '16px',
+        left: '50%',
+        transform: isVisible 
+          ? 'translateX(-50%) translateY(0px)' 
+          : 'translateX(-50%) translateY(120px)',
+        transition: 'transform 0.3s ease-in-out',
+        width: 'calc(100% - 16px)',
+        maxWidth: '600px',
+        borderRadius: '9999px',
+        border: '1px solid rgba(255, 255, 255, 0.1)'
+      }}
+    >
+      <div className="max-w-4xl mx-auto px-2 sm:px-4 py-2 sm:py-3">
+        <div className="flex items-center justify-center gap-1 sm:gap-2">
+          {/* Home */}
+          <a 
+            href="/" 
+            className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
+              isActive('home') 
+                ? 'text-white bg-gray-700' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-700'
+            }`}
+            title="Inicio"
+          >
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 sm:mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <span className="text-[10px] sm:text-xs">Inicio</span>
+          </a>
+
+          {/* Categories */}
+          <a 
+            href="/categories" 
+            className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
+              isActive('categories') 
+                ? 'text-white bg-gray-700' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-700'
+            }`}
+            title="NotiTech"
+          >
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 sm:mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+            <span className="text-[10px] sm:text-xs">NotiTech</span>
+          </a>
+
+          {/* About */}
+          <a 
+            href="/about" 
+            className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
+              isActive('about') 
+                ? 'text-white bg-gray-700' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-700'
+            }`}
+            title="Ciberseguridad"
+          >
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 sm:mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="text-[10px] sm:text-xs">Ciberseguridad</span>
+          </a>
+
+          {/* AI */}
+          <a 
+            href="/ai" 
+            className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
+              isActive('ai') 
+                ? 'text-white bg-gray-700' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-700'
+            }`}
+            title="Ai"
+          >
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 sm:mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            <span className="text-[10px] sm:text-xs">Ai</span>
+          </a>
+
+          {/* Links */}
+          <a 
+            href="/links" 
+            className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
+              isActive('links') 
+                ? 'text-white bg-gray-700' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-700'
+            }`}
+            title="Desarrollo"
+          >
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 sm:mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+            <span className="text-[10px] sm:text-xs">Desarrollo</span>
+          </a>
+
+          {/* Settings */}
+          <a 
+            href="/settings" 
+            className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
+              isActive('settings') 
+                ? 'text-white bg-gray-700' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-700'
+            }`}
+            title="Portafolio"
+          >
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 sm:mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+            </svg>
+            <span className="text-[10px] sm:text-xs">Portafolio</span>
+          </a>
+        </div>
       </div>
-      
-      {/* Profile Picture */}
-      <div className="w-10 h-10 rounded-full bg-gray-600 mt-4 flex items-center justify-center">
-        <div className="w-8 h-8 rounded-full bg-gray-400"></div>
-      </div>
-    </aside>
+    </nav>
   );
 }
