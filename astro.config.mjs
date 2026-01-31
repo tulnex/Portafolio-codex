@@ -10,12 +10,16 @@ export default defineConfig({
     port: 4321,
     host: true
   },
-  output: 'static',
   vite: {
     clearScreen: false,
     server: {
       fs: {
         strict: false
+      },
+      hmr: {
+        protocol: 'ws',
+        host: 'localhost',
+        port: 4321
       }
     }
   }

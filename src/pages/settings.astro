@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LeftSidebar from '../components/LeftSidebar.tsx';
+---
+
+<Layout>
+	<div class="flex min-h-screen">
+		<LeftSidebar client:load currentPage="settings" />
+		<main class="flex-1 ml-16 p-8 bg-gray-50">
+			<div class="max-w-6xl mx-auto">
+				<!-- Header -->
+				<div class="mb-8">
+					<h1 class="text-4xl font-bold text-black mb-2">
+						Configuración
+					</h1>
+					<p class="text-gray-600">
+						Configuración y preferencias
+					</p>
+				</div>
+
+				<!-- Content -->
+				<div class="bg-white rounded-lg p-8 shadow-sm">
+					<!-- Contenido aquí -->
+				</div>
+			</div>
+		</main>
+	</div>
+</Layout>

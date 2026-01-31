@@ -1,132 +1,180 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LeftSidebar from '../components/LeftSidebar.tsx';
-import RightSidebar from '../components/RightSidebar.tsx';
 ---
 
 <Layout>
 	<div class="flex min-h-screen">
 		<LeftSidebar client:load currentPage="home" />
-		<main class="flex-1 ml-16 mr-80 p-8 bg-gray-50">
+		<main class="flex-1 ml-16 p-8 bg-gray-50">
 			<div class="max-w-6xl mx-auto">
 				<!-- Header -->
 				<div class="mb-8">
 					<h1 class="text-4xl font-bold text-black mb-2">
-						Bienvenido a tu Dashboard
+						Blog
 					</h1>
 					<p class="text-gray-600">
-						Gestiona tu equipo y flujos de trabajo desde un solo lugar
+						Artículos, tutoriales y reflexiones sobre tecnología y desarrollo
 					</p>
 				</div>
 
-				<!-- Welcome Cards -->
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-					<!-- Quick Actions Card -->
-					<div class="bg-white rounded-lg p-6 shadow-sm">
-						<div class="flex items-center gap-3 mb-4">
-							<div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-								<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-								</svg>
-							</div>
-							<h2 class="text-xl font-semibold text-black">Acciones Rápidas</h2>
+				<!-- Featured Post -->
+				<div class="bg-white rounded-lg p-8 shadow-sm mb-8 overflow-hidden">
+					<div class="flex flex-col md:flex-row gap-6">
+						<div class="md:w-1/3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center min-h-[200px]">
+							<svg class="w-24 h-24 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+							</svg>
 						</div>
-						<div class="space-y-3">
-							<a href="/organization" class="block p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-								<div class="flex items-center justify-between">
-									<span class="text-gray-700">Ver Organización</span>
-									<svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<div class="md:w-2/3">
+							<div class="flex items-center gap-2 mb-3">
+								<span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">Destacado</span>
+								<span class="text-sm text-gray-500">Hace 2 días</span>
+							</div>
+							<h2 class="text-3xl font-bold text-black mb-3">Título del Artículo Destacado</h2>
+							<p class="text-gray-600 mb-4">Descripción breve del artículo destacado que captura la atención del lector y lo invita a leer más sobre el tema...</p>
+							<div class="flex items-center gap-4">
+								<a href="#" class="text-blue-600 font-medium hover:text-blue-700 flex items-center gap-2">
+									Leer más
+									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
 									</svg>
-								</div>
-							</a>
-							<div class="p-3 bg-gray-50 rounded-lg">
-								<div class="flex items-center justify-between">
-									<span class="text-gray-700">Crear Nuevo Proyecto</span>
-									<svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+								</a>
+								<div class="flex items-center gap-2 text-sm text-gray-500">
+									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
 									</svg>
+									<span>5 min lectura</span>
 								</div>
-							</div>
-							<div class="p-3 bg-gray-50 rounded-lg">
-								<div class="flex items-center justify-between">
-									<span class="text-gray-700">Configurar Equipo</span>
-									<svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-									</svg>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Stats Overview Card -->
-					<div class="bg-white rounded-lg p-6 shadow-sm">
-						<div class="flex items-center gap-3 mb-4">
-							<div class="w-12 h-12 bg-lime-100 rounded-lg flex items-center justify-center">
-								<svg class="w-6 h-6 text-lime-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-								</svg>
-							</div>
-							<h2 class="text-xl font-semibold text-black">Resumen de Estadísticas</h2>
-						</div>
-						<div class="space-y-4">
-							<div class="flex items-center justify-between">
-								<span class="text-gray-600">Operaciones Totales</span>
-								<span class="text-2xl font-bold text-black">780</span>
-							</div>
-							<div class="flex items-center justify-between">
-								<span class="text-gray-600">Transferencia de Datos</span>
-								<span class="text-2xl font-bold text-lime-600">163 MB</span>
-							</div>
-							<div class="flex items-center justify-between">
-								<span class="text-gray-600">Equipos Activos</span>
-								<span class="text-2xl font-bold text-blue-600">12</span>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<!-- Recent Activity -->
-				<div class="bg-white rounded-lg p-6 shadow-sm">
-					<h2 class="text-xl font-semibold text-black mb-4">Actividad Reciente</h2>
-					<div class="space-y-3">
-						<div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-							<div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-								<svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+				<!-- Blog Posts Grid -->
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+					<!-- Blog Post Card 1 -->
+					<article class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden">
+						<div class="h-48 bg-gradient-to-br from-green-400 to-blue-500"></div>
+						<div class="p-6">
+							<div class="flex items-center gap-2 mb-3">
+								<span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">Tutorial</span>
+								<span class="text-xs text-gray-500">Hace 5 días</span>
+							</div>
+							<h3 class="text-xl font-bold text-black mb-2">Título del Artículo</h3>
+							<p class="text-gray-600 text-sm mb-4">Breve descripción del contenido del artículo que invita a leer más...</p>
+							<a href="#" class="text-blue-600 font-medium hover:text-blue-700 text-sm flex items-center gap-2">
+								Leer artículo
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
 								</svg>
-							</div>
-							<div class="flex-1">
-								<p class="text-sm font-medium text-black">Nuevo proyecto creado</p>
-								<p class="text-xs text-gray-500">Hace 2 horas</p>
-							</div>
+							</a>
 						</div>
-						<div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-							<div class="w-10 h-10 bg-lime-100 rounded-full flex items-center justify-center">
-								<svg class="w-5 h-5 text-lime-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+					</article>
+
+					<!-- Blog Post Card 2 -->
+					<article class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden">
+						<div class="h-48 bg-gradient-to-br from-purple-400 to-pink-500"></div>
+						<div class="p-6">
+							<div class="flex items-center gap-2 mb-3">
+								<span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded">Opinión</span>
+								<span class="text-xs text-gray-500">Hace 1 semana</span>
+							</div>
+							<h3 class="text-xl font-bold text-black mb-2">Título del Artículo</h3>
+							<p class="text-gray-600 text-sm mb-4">Breve descripción del contenido del artículo que invita a leer más...</p>
+							<a href="#" class="text-blue-600 font-medium hover:text-blue-700 text-sm flex items-center gap-2">
+								Leer artículo
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
 								</svg>
-							</div>
-							<div class="flex-1">
-								<p class="text-sm font-medium text-black">Tarea completada</p>
-								<p class="text-xs text-gray-500">Hace 5 horas</p>
-							</div>
+							</a>
 						</div>
-						<div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-							<div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-								<svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+					</article>
+
+					<!-- Blog Post Card 3 -->
+					<article class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden">
+						<div class="h-48 bg-gradient-to-br from-orange-400 to-red-500"></div>
+						<div class="p-6">
+							<div class="flex items-center gap-2 mb-3">
+								<span class="px-2 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded">Noticias</span>
+								<span class="text-xs text-gray-500">Hace 2 semanas</span>
+							</div>
+							<h3 class="text-xl font-bold text-black mb-2">Título del Artículo</h3>
+							<p class="text-gray-600 text-sm mb-4">Breve descripción del contenido del artículo que invita a leer más...</p>
+							<a href="#" class="text-blue-600 font-medium hover:text-blue-700 text-sm flex items-center gap-2">
+								Leer artículo
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
 								</svg>
-							</div>
-							<div class="flex-1">
-								<p class="text-sm font-medium text-black">Nuevo miembro agregado al equipo</p>
-								<p class="text-xs text-gray-500">Ayer</p>
-							</div>
+							</a>
 						</div>
-					</div>
+					</article>
+
+					<!-- Blog Post Card 4 -->
+					<article class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden">
+						<div class="h-48 bg-gradient-to-br from-indigo-400 to-blue-500"></div>
+						<div class="p-6">
+							<div class="flex items-center gap-2 mb-3">
+								<span class="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded">Tutorial</span>
+								<span class="text-xs text-gray-500">Hace 3 semanas</span>
+							</div>
+							<h3 class="text-xl font-bold text-black mb-2">Título del Artículo</h3>
+							<p class="text-gray-600 text-sm mb-4">Breve descripción del contenido del artículo que invita a leer más...</p>
+							<a href="#" class="text-blue-600 font-medium hover:text-blue-700 text-sm flex items-center gap-2">
+								Leer artículo
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+								</svg>
+							</a>
+						</div>
+					</article>
+
+					<!-- Blog Post Card 5 -->
+					<article class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden">
+						<div class="h-48 bg-gradient-to-br from-teal-400 to-cyan-500"></div>
+						<div class="p-6">
+							<div class="flex items-center gap-2 mb-3">
+								<span class="px-2 py-1 bg-teal-100 text-teal-700 text-xs font-semibold rounded">Guía</span>
+								<span class="text-xs text-gray-500">Hace 1 mes</span>
+							</div>
+							<h3 class="text-xl font-bold text-black mb-2">Título del Artículo</h3>
+							<p class="text-gray-600 text-sm mb-4">Breve descripción del contenido del artículo que invita a leer más...</p>
+							<a href="#" class="text-blue-600 font-medium hover:text-blue-700 text-sm flex items-center gap-2">
+								Leer artículo
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+								</svg>
+							</a>
+						</div>
+					</article>
+
+					<!-- Blog Post Card 6 -->
+					<article class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden">
+						<div class="h-48 bg-gradient-to-br from-yellow-400 to-orange-500"></div>
+						<div class="p-6">
+							<div class="flex items-center gap-2 mb-3">
+								<span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded">Tips</span>
+								<span class="text-xs text-gray-500">Hace 1 mes</span>
+							</div>
+							<h3 class="text-xl font-bold text-black mb-2">Título del Artículo</h3>
+							<p class="text-gray-600 text-sm mb-4">Breve descripción del contenido del artículo que invita a leer más...</p>
+							<a href="#" class="text-blue-600 font-medium hover:text-blue-700 text-sm flex items-center gap-2">
+								Leer artículo
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+								</svg>
+							</a>
+						</div>
+					</article>
+				</div>
+
+				<!-- Load More -->
+				<div class="text-center">
+					<button class="px-6 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition">
+						Cargar más artículos
+					</button>
 				</div>
 			</div>
 		</main>
-		<RightSidebar client:load />
 	</div>
 </Layout>

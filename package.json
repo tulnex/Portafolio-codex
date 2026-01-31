@@ -3,14 +3,15 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "predev": "node scripts/clean-cache.js || echo Cache cleanup skipped",
+    "predev": "node scripts/clean-cache.js && node scripts/verify-structure.js || echo Cache cleanup skipped",
     "dev": "astro dev --host",
-    "dev:clean": "node scripts/clean-cache.js && astro dev --host",
+    "dev:clean": "node scripts/clean-cache.js && node scripts/verify-structure.js && astro dev --host",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "dev:win": "powershell -ExecutionPolicy Bypass -File ./dev.ps1",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "verify": "node scripts/verify-structure.js"
   },
   "dependencies": {
     "astro": "^5.16.15",
