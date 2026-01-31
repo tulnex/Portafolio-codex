@@ -16,7 +16,7 @@ export default function LeftSidebar({ currentPage = 'home' }: LeftSidebarProps) 
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY || document.documentElement.scrollTop || 0;
-          
+
           // Si está en la parte superior, siempre mostrar
           if (currentScrollY <= 50) {
             setIsVisible(true);
@@ -24,33 +24,33 @@ export default function LeftSidebar({ currentPage = 'home' }: LeftSidebarProps) 
             ticking = false;
             return;
           }
-          
+
           // Calcular diferencia de scroll
           const scrollDelta = currentScrollY - lastScrollY.current;
-          
+
           // Si se desplaza hacia abajo más de 10px, ocultar
           if (scrollDelta > 10) {
             setIsVisible(false);
-          } 
+          }
           // Si se desplaza hacia arriba más de 10px, mostrar
           else if (scrollDelta < -10) {
             setIsVisible(true);
           }
-          
+
           lastScrollY.current = currentScrollY;
           ticking = false;
         });
-        
+
         ticking = true;
       }
     };
 
     // Inicializar la posición
     lastScrollY.current = window.scrollY || document.documentElement.scrollTop || 0;
-    
+
     // Agregar el listener
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
+
     // Cleanup
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -63,8 +63,8 @@ export default function LeftSidebar({ currentPage = 'home' }: LeftSidebarProps) 
       style={{
         bottom: '16px',
         left: '50%',
-        transform: isVisible 
-          ? 'translateX(-50%) translateY(0px)' 
+        transform: isVisible
+          ? 'translateX(-50%) translateY(0px)'
           : 'translateX(-50%) translateY(120px)',
         transition: 'transform 0.3s ease-in-out',
         width: 'calc(100% - 16px)',
@@ -79,8 +79,8 @@ export default function LeftSidebar({ currentPage = 'home' }: LeftSidebarProps) 
           <a 
             href="/" 
             className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
-              isActive('home') 
-                ? 'text-white bg-gray-700' 
+              isActive('home')
+                ? 'text-white bg-gray-700'
                 : 'text-gray-400 hover:text-white hover:bg-gray-700'
             }`}
             title="Inicio"
@@ -91,12 +91,12 @@ export default function LeftSidebar({ currentPage = 'home' }: LeftSidebarProps) 
             <span className="text-[10px] sm:text-xs">Inicio</span>
           </a>
 
-          {/* Categories */}
+          {/* NotiTech */}
           <a 
-            href="/categories" 
+            href="/notitech" 
             className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
-              isActive('categories') 
-                ? 'text-white bg-gray-700' 
+              isActive('notitech')
+                ? 'text-white bg-gray-700'
                 : 'text-gray-400 hover:text-white hover:bg-gray-700'
             }`}
             title="NotiTech"
@@ -107,12 +107,12 @@ export default function LeftSidebar({ currentPage = 'home' }: LeftSidebarProps) 
             <span className="text-[10px] sm:text-xs">NotiTech</span>
           </a>
 
-          {/* About */}
+          {/* Ciberseguridad */}
           <a 
-            href="/about" 
+            href="/ciberseguridad" 
             className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
-              isActive('about') 
-                ? 'text-white bg-gray-700' 
+              isActive('ciberseguridad')
+                ? 'text-white bg-gray-700'
                 : 'text-gray-400 hover:text-white hover:bg-gray-700'
             }`}
             title="Ciberseguridad"
@@ -127,8 +127,8 @@ export default function LeftSidebar({ currentPage = 'home' }: LeftSidebarProps) 
           <a 
             href="/ai" 
             className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
-              isActive('ai') 
-                ? 'text-white bg-gray-700' 
+              isActive('ai')
+                ? 'text-white bg-gray-700'
                 : 'text-gray-400 hover:text-white hover:bg-gray-700'
             }`}
             title="Ai"
@@ -139,12 +139,12 @@ export default function LeftSidebar({ currentPage = 'home' }: LeftSidebarProps) 
             <span className="text-[10px] sm:text-xs">Ai</span>
           </a>
 
-          {/* Links */}
+          {/* Desarrollo */}
           <a 
-            href="/links" 
+            href="/desarrollo" 
             className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
-              isActive('links') 
-                ? 'text-white bg-gray-700' 
+              isActive('desarrollo')
+                ? 'text-white bg-gray-700'
                 : 'text-gray-400 hover:text-white hover:bg-gray-700'
             }`}
             title="Desarrollo"
@@ -155,12 +155,12 @@ export default function LeftSidebar({ currentPage = 'home' }: LeftSidebarProps) 
             <span className="text-[10px] sm:text-xs">Desarrollo</span>
           </a>
 
-          {/* Settings */}
+          {/* Portafolio */}
           <a 
-            href="/settings" 
+            href="/portafolio" 
             className={`flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg transition min-w-[50px] sm:min-w-[60px] ${
-              isActive('settings') 
-                ? 'text-white bg-gray-700' 
+              isActive('portafolio')
+                ? 'text-white bg-gray-700'
                 : 'text-gray-400 hover:text-white hover:bg-gray-700'
             }`}
             title="Portafolio"

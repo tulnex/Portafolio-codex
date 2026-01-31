@@ -15,11 +15,6 @@ export default defineConfig({
     server: {
       fs: {
         strict: false
-      },
-      hmr: {
-        protocol: 'ws',
-        host: 'localhost',
-        port: 4321
       }
     }
   }
