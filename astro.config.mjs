@@ -15,6 +15,9 @@ export default defineConfig({
     server: {
       fs: {
         strict: false
+      },
+      optimizeDeps: {
+        include: ['react', 'react-dom']
       }
     }
   }

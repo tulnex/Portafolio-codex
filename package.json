@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "predev": "node scripts/clean-cache.js && node scripts/verify-structure.js || echo Cache cleanup skipped",
+    "predev": "node scripts/predev.js",
     "dev": "astro dev --host",
     "dev:clean": "node scripts/clean-cache.js && node scripts/verify-structure.js && astro dev --host",
     "build": "astro build",
